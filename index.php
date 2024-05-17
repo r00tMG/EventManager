@@ -6,10 +6,12 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
   createEvents();
 }
 $events = readEvents();
+// var_dump($events);
 if(!isConnect()){
     redirect_login();
 }
-isAdmin();
+// isAdmin();
+// var_dump($_SESSION)
 ?>
 
 <!doctype html>
@@ -39,6 +41,7 @@ isAdmin();
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0">
               <?php
+
                     if( isset($_SESSION['users'] )) {
                       echo '
                       <a class="nav-link " href="config/logout.php" >
@@ -50,8 +53,13 @@ isAdmin();
                       </a>
 
                         ';
-
+                    }else{
+                      echo '
+                      <a class="nav-link " href="config/login.php" >
+                      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M13 16L18 12 13 8 13 11 4 11 4 13 13 13z"></path><path d="M20,3h-9C9.897,3,9,3.897,9,5v4h2V5h9v14h-9v-4H9v4c0,1.103,0.897,2,2,2h9c1.103,0,2-0.897,2-2V5C22,3.897,21.103,3,20,3z"></path></svg>                      </a>
+                      ';
                     }
+
                 ?>
                 
                 
@@ -125,16 +133,22 @@ isAdmin();
                     <td><?=$event['lieu_events']?></td>
                     <td><?=$event['description_events']?></td>
                     <td><?=$event['userID']?></td>
-                    <td>
+                    <?php
+                    if(!empty($_SESSION)){
+                      echo '
+                      <td>
                         <a 
                         class="text-decoration-none" 
-                        href="show.php?id=<?=$event['events_id']?>"
+                        href="show.php?id='.$event['events_id'].'&email='.$_SESSION['users'].'"
                         ><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12,9c-1.642,0-3,1.359-3,3c0,1.642,1.358,3,3,3c1.641,0,3-1.358,3-3C15,10.359,13.641,9,12,9z"></path><path d="M12,5c-7.633,0-9.927,6.617-9.948,6.684L1.946,12l0.105,0.316C2.073,12.383,4.367,19,12,19s9.927-6.617,9.948-6.684 L22.054,12l-0.105-0.316C21.927,11.617,19.633,5,12,5z M12,17c-5.351,0-7.424-3.846-7.926-5C4.578,10.842,6.652,7,12,7 c5.351,0,7.424,3.846,7.926,5C19.422,13.158,17.348,17,12,17z"></path></svg></a>
-                    </td>
+                      </td>
+                      ';
+                    
+                    }
+                    ?>
+                    
                     <?php
                         if(isset($_SESSION['users']) && $_SESSION['users'] == "admin@gmail.com"){
-                        
-                        // }else{
                         echo '
                             <td>
                                 <a 

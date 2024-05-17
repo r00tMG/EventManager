@@ -14,9 +14,9 @@ function redirect_login():void{
     }
 }
 
-function isAdmin():bool{
-    if(isConnect())
-        $_SESSION['admin']=1;
-        return true;
+// function isAdmin():bool{
+//     if(isConnect())
+//         $_SESSION['admin']=1;
+//         return true;
     
-}
+// }
