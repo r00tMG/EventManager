@@ -7,6 +7,6 @@ function deleteEvents(){
     $response->execute([$id]); 
 }
 deleteEvents();
-header('Location:../index.php');
+header('Location:../../index.php');
 
 // $events = readEvents();

@@ -8,6 +8,7 @@
     $time=$_POST['time'] ?? null ;
     $lieu=$_POST['lieu_events'] ?? null;
     $describ=$_POST['description_events'] ?? null;
+    $userID=$_POST['userID'] ?? null;
     $connection = new PDO('mysql:host=localhost; dbname=eventManager_db', 'phpmyadmin', 'password');
     // $response = $connection->prepare('UPDATE events SET date=?, time=?, lieu_events=?, description_events=? WHERE events_id=?');
     $response = $connection->prepare('SELECT *FROM events WHERE events_id=?');
@@ -49,6 +50,9 @@
         </div>
         <div >
             <input class="form-control mb-2" type="text" value="<?=$event['description_events'];?>"   name="description_events" placeholder="Description">
+        </div>
+        <div >
+            <input class="form-control mb-2" type="text" value="<?=$event['userID'];?>"   name="userID" placeholder="Organisateur">
         </div>
         <div class="m-auto">
             <button type="submit" class=" btn btn-primary">Edit</button>
