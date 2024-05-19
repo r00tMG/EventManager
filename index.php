@@ -5,13 +5,18 @@ require_once 'config/auth.php';
 if($_SERVER['REQUEST_METHOD']==='POST'){
   createEvents();
 }
-$events = readEvents();
-// var_dump($events);
+if($events)
+    $events = readEvents();
+// echo '<pre>';
+// print_r($_SERVER);
+// echo '</pre>';
 if(!isConnect()){
     redirect_login();
 }
-// isAdmin();
-// var_dump($_SESSION)
+// if($success){
+//   echo $success;
+// }
+
 ?>
 
 <!doctype html>
@@ -21,7 +26,6 @@ if(!isConnect()){
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Liste des events</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script type="module" src="js/script.js"></script>
   </head>
   <body>
     <header>
@@ -47,16 +51,18 @@ if(!isConnect()){
                       <a class="nav-link " href="config/logout.php" >
                       <svg stroke="currentColor" class="text-danger" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 13L16 11 7 11 7 8 2 12 7 16 7 13z"></path><path d="M20,3h-9C9.897,3,9,3.897,9,5v4h2V5h9v14h-9v-4H9v4c0,1.103,0.897,2,2,2h9c1.103,0,2-0.897,2-2V5C22,3.897,21.103,3,20,3z"></path></svg>
                       </a>
-                      <a class="nav-link " href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <form method="POST">
+                      <a class="nav-link " type="submit" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       <svg stroke="currentColor" class="text-success" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>                       
                       '.$_SESSION['users'].'
                       </a>
+                      <form>
 
                         ';
                     }else{
                       echo '
                       <a class="nav-link " href="config/login.php" >
-                      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M13 16L18 12 13 8 13 11 4 11 4 13 13 13z"></path><path d="M20,3h-9C9.897,3,9,3.897,9,5v4h2V5h9v14h-9v-4H9v4c0,1.103,0.897,2,2,2h9c1.103,0,2-0.897,2-2V5C22,3.897,21.103,3,20,3z"></path></svg>                      </a>
+                      <svg stroke="currentColor" class="text-primary" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M13 16L18 12 13 8 13 11 4 11 4 13 13 13z"></path><path d="M20,3h-9C9.897,3,9,3.897,9,5v4h2V5h9v14h-9v-4H9v4c0,1.103,0.897,2,2,2h9c1.103,0,2-0.897,2-2V5C22,3.897,21.103,3,20,3z"></path></svg>                      </a>
                       ';
                     }
 
@@ -108,7 +114,9 @@ if(!isConnect()){
         <div class="w-50 m-auto">
         <form class="d-flex my-5" >
         <input class="form-control me-2" id="searchEvent" placeholder="Search" >
-        <!-- <button class="btn btn-sm btn-outline-success" type="submit">Search</button> -->
+        <button class="btn btn-sm btn-outline-primary" type="submit">
+        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"></path><path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"></path></svg>
+        </button>
       </form>
         </div>
         <table class="table table-dark table-bordered table-columns">
@@ -120,7 +128,9 @@ if(!isConnect()){
                     <td>Lieu</td>
                     <td>Description</td>
                     <td>Organisateur</td>
+                    <?php if(!empty($_SESSION['users'])):?>
                     <td colspan="4" class="text-center">Action</td>
+                    <?php endif?>
                 </tr>
             </thead>
             <tbody>
@@ -134,7 +144,7 @@ if(!isConnect()){
                     <td><?=$event['description_events']?></td>
                     <td><?=$event['userID']?></td>
                     <?php
-                    if(!empty($_SESSION)){
+                    if(!empty($_SESSION['users'])){
                       echo '
                       <td>
                         <a 
@@ -142,6 +152,15 @@ if(!isConnect()){
                         href="show.php?id='.$event['events_id'].'&email='.$_SESSION['users'].'"
                         ><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12,9c-1.642,0-3,1.359-3,3c0,1.642,1.358,3,3,3c1.641,0,3-1.358,3-3C15,10.359,13.641,9,12,9z"></path><path d="M12,5c-7.633,0-9.927,6.617-9.948,6.684L1.946,12l0.105,0.316C2.073,12.383,4.367,19,12,19s9.927-6.617,9.948-6.684 L22.054,12l-0.105-0.316C21.927,11.617,19.633,5,12,5z M12,17c-5.351,0-7.424-3.846-7.926-5C4.578,10.842,6.652,7,12,7 c5.351,0,7.424,3.846,7.926,5C19.422,13.158,17.348,17,12,17z"></path></svg></a>
                       </td>
+                      <td>
+                        <a 
+                        class="text-decoration-none" id="inscription"
+                        href="inscription.php?id='.$event['events_id'].'&email='.$_SESSION['users'].'"
+                        >
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 14 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7 6.75V12h4V8h1v4c0 .55-.45 1-1 1H7v3l-5.45-2.72c-.33-.17-.55-.52-.55-.91V1c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v3h-1V1H3l4 2v2.25L10 3v2h4v2h-4v2L7 6.75z"></path></svg>                        </a>
+                      </td>
+                      
+        
                       ';
                     
                     }
