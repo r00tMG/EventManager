@@ -29,13 +29,13 @@ try {
         $mail->SMTPSecure = 'ssl'; 
         $mail->Host       = 'smtp.gmail.com';  
         $mail->SMTPAuth   = true;                
-        $mail->Username   = 'meissagningue0@gmail.com';  
-        $mail->Password   = 'uqas alni pxlg lpxk';       
+        $mail->Username   = '';  
+        $mail->Password   = '';       
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  
         $mail->Port       = 587;                 
     
         
-        $mail->setFrom('meissagningue0@gmail.com', 'EventManager');
+        $mail->setFrom('', 'EventManager');
         $mail->addAddress($email, $email);     
     
         

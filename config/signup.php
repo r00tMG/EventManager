@@ -50,7 +50,7 @@ if($user){
         <input type="password" class="form-control" name="password" placeholder="password">
       </div>
       <div class="col-12">
-        <input type="text" class="form-control" name="role" placeholder="Role">
+        <input type="hidden" class="form-control" name="role" placeholder="Role">
       </div>
       <div class="col-12">
         <button type="submit" class="btn btn-primary">Sign in</button>
