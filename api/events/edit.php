@@ -13,7 +13,7 @@
     // $response = $connection->prepare('UPDATE events SET date=?, time=?, lieu_events=?, description_events=? WHERE events_id=?');
     $response = $connection->prepare('SELECT *FROM events WHERE events_id=?');
     $response->execute([$id]); 
-    $event = $response->fetch();
+    $event = $response->fetch(PDO::FETCH_ASSOC);
     // print_r($event);
     // header('location: ../index.php');
 

@@ -8,15 +8,8 @@ function isConnect():bool{
 }
 // var_dump(isConnect());
 function redirect_login():void{
-    if(!isConnect()){
+    if(isConnect()!==false){
         header('Location: config/login.php');
         exit();
     }
 }
-
-// function isAdmin():bool{
-//     if(isConnect())
-//         $_SESSION['admin']=1;
-//         return true;
-    
-// }

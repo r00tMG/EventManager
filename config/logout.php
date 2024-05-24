@@ -1,8 +1,7 @@
 <?php
 require_once 'auth.php';
-var_dump(isConnect());
+isConnect();
 if(isConnect()){
-    unset($_SESSION);
-    // unset($_SESSION);
+    unset($_SESSION["users"]);
     header('location: login.php');
 }

@@ -7,15 +7,13 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 }
 if($events)
     $events = readEvents();
+
+if(isConnect()===false){
+  redirect_login();
+}
 // echo '<pre>';
-// print_r($_SERVER);
+// var_dump($_SESSION['users']);
 // echo '</pre>';
-// if(!isConnect()){
-    redirect_login();
-// }
-// if($success){
-//   echo $success;
-// }
 
 ?>
 
@@ -131,7 +129,7 @@ if($events)
                 }
               }
               // echo '<pre>';
-              // var_dump($describ);
+              // var_dump('az');
               // echo '<pre>';
               if(!empty($describ)){
                 echo '
@@ -184,7 +182,7 @@ if($events)
                   
                   
                   
-                      if(isset($_SESSION['users']) && $_SESSION['users'] == "admin@gmail.com"){
+                      if($_SESSION['users'] == "admin@gmail.com"){
                       echo '
                           <td>
                               <a 
@@ -208,14 +206,12 @@ if($events)
                       
                       ';
                       
-                      echo  '</tr>
-                    }
-                  }
-                  
-                }
-                ';
-              }}}}
-            ?>
+                    echo  '</tr>';
+              }
+            }
+          }
+        }
+              ?>
         <table class="table table-dark table-bordered table-columns">
         <h2 class="text-center">Liste des Evenements</h2>
 
@@ -233,7 +229,7 @@ if($events)
                 </tr>
             </thead>
             <tbody>
-                <?php if(isset($events)!==null){?>
+                <?php if(isset($events)){?>
                     <?php foreach($events as $event): ?>
                 <tr>
                     <td><?=$event['events_id']?></td>
@@ -244,6 +240,7 @@ if($events)
                     <td><?=$event['userID']?></td>
                     <?php
                     if(!empty($_SESSION['users'])){
+                      // require_once 'inscription.php';
                       echo '
                       <td>
                         <a 
