@@ -29,13 +29,13 @@ try {
         $mail->SMTPSecure = 'ssl'; 
         $mail->Host       = 'smtp.gmail.com';  
         $mail->SMTPAuth   = true;                
-        $mail->Username   = 'meissagningue0@gmail.com';  
-        $mail->Password   = 'uqas alni pxlg lpxk';       
+        $mail->Username   = '';  
+        $mail->Password   = '';       
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;  
         $mail->Port       = 587;                 
     
         
-        $mail->setFrom('meissagningue0@gmail.com', 'EventManager');
+        $mail->setFrom('', 'EventManager');
         $mail->addAddress($email, $email);     
     
         if(isset($eventsByID[0]['userID'])){
@@ -101,7 +101,6 @@ try {
                       <a class="nav-link " type="submit" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       <svg stroke="currentColor" class="text-success" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>                       
                       '.$_SESSION['users'].'
-                      </a>
                       <form>
 
                         ';
